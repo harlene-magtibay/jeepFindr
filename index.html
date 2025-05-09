@@ -7,10 +7,19 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="style.css" />
 
-
 </head>
 <body>
-    <h1 class="name-label">JeepFindr</h2>
+    <div class="input-container">
+        <h1 class="name-label">JeepFindr</h2>
+        <div class="inputbox-container">
+            <img src="/img/location_to_destination.png" alt="">
+            <div class="inputbox">
+                <input type="text" id="start" placeholder="Your Location">
+                <input type="text" id="end" placeholder="Desination">
+            </div>
+        </div>
+        <button class="findRouteButton" onclick="findRoute()">Find Jeepney Route</button>
+    </div>
     
     <div id="map"></div>
 
