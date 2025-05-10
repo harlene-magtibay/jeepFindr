@@ -7,6 +7,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 1,
         "@id": "relation/5267270",
         "colour": "gray",
         "name": "Jeepney BP-03: Batangas - Capitolio - Hospital",
@@ -1641,6 +1642,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 5,
         "@id": "node/774613055",
         "@relations": [
           {
@@ -1673,6 +1675,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 18,
         "@id": "node/3922053585",
         "@relations": [
           {
@@ -1705,6 +1708,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 11,
         "@id": "node/3922053589",
         "@relations": [
           {
@@ -1737,6 +1741,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 17,
         "@id": "node/3922053590",
         "@relations": [
           {
@@ -1769,6 +1774,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 15,
         "@id": "node/3922053598",
         "@relations": [
           {
@@ -1801,6 +1807,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 1,
         "@id": "node/4433895893",
         "@relations": [
           {
@@ -1833,6 +1840,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 2,
         "@id": "node/7418590957",
         "@relations": [
           {
@@ -1865,6 +1873,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 3,
         "@id": "node/7413278580",
         "@relations": [
           {
@@ -1897,6 +1906,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 4,
         "@id": "node/5310693921",
         "@relations": [
           {
@@ -1929,6 +1939,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 6,
         "@id": "node/4658716891",
         "@relations": [
           {
@@ -1961,6 +1972,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 23,
         "@id": "node/4425941397",
         "@relations": [
           {
@@ -1993,6 +2005,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 8,
         "@id": "node/5301974523",
         "@relations": [
           {
@@ -2025,6 +2038,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 9,
         "@id": "node/7410467765",
         "@relations": [
           {
@@ -2057,6 +2071,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 10,
         "@id": "node/6575969988",
         "@relations": [
           {
@@ -2089,6 +2104,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 12,
         "@id": "node/7410467760",
         "@relations": [
           {
@@ -2121,6 +2137,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 13,
         "@id": "node/7410467759",
         "@relations": [
           {
@@ -2153,6 +2170,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 14,
         "@id": "node/7410467758",
         "@relations": [
           {
@@ -2185,6 +2203,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 16,
         "@id": "node/7410467757",
         "@relations": [
           {
@@ -2217,6 +2236,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 19,
         "@id": "node/6575970287",
         "@relations": [
           {
@@ -2249,6 +2269,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 20,
         "@id": "node/7076721594",
         "@relations": [
           {
@@ -2281,6 +2302,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 21,
         "@id": "node/7413314086",
         "@relations": [
           {
@@ -2313,6 +2335,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 22,
         "@id": "node/5301982826",
         "@relations": [
           {
@@ -2345,6 +2368,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 7,
         "@id": "node/5301974532",
         "@relations": [
           {
@@ -2377,6 +2401,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 24,
         "@id": "node/5301974431",
         "@relations": [
           {
@@ -2409,6 +2434,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 25,
         "@id": "node/5301974430",
         "@relations": [
           {
@@ -2441,6 +2467,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 26,
         "@id": "node/4658775493",
         "@relations": [
           {
@@ -2473,6 +2500,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 27,
         "@id": "node/4681784591",
         "@relations": [
           {

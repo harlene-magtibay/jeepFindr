@@ -20,22 +20,25 @@ fetch('/geojson_files/batangas_alangilan_route.geojson')
   .then(response => response.json())
   .then(data => {
    L.geoJSON(data, {
+    // filter: function (feature) {
+    //     return feature.geometry.type !== 'Point';
+    //   },
   style: {
     color: 'blue',
     weight: 8,
-    opacity: 0.7
+    opacity: 1
   },
   pointToLayer: function (feature, latlng) {
-  const stopNum = feature.properties.stop_number;
-  const label = L.divIcon({
-    className: 'stop-label',
-    html: `<div style="color:white; background:red; width:18px; border-radius:50%; padding:1px; text-align:center; padding-top:3px; font-size:10px; border:1px solid black;">${stopNum}</div>`,
-    iconSize: [30, 20],
-    iconAnchor: [15, 10]
-  });
+    const stopNum = feature.properties.stop_number;
+    const label = L.divIcon({
+      className: 'stop-label',
+      html: `<div style="color:white; background:blue; width:18px; border-radius:50%; padding:1px; text-align:center; padding-top:3px; font-size:10px; border:1px solid black;">${stopNum}</div>`,
+      iconSize: [30, 20],
+      iconAnchor: [15, 10]
+    });
 
-  return L.marker(latlng, { icon: label }).bindPopup(`Stop ${stopNum}: ${feature.properties.name || 'Jeepney Stop'}`);
-}
+    return L.marker(latlng, { icon: label }).bindPopup(`Stop ${stopNum}: ${feature.properties.name || 'Jeepney Stop'}`);
+  }
 }).addTo(map);
   });
 
@@ -44,17 +47,22 @@ fetch('/geojson_files/batangas_balagtas_route.geojson')
   .then(response => response.json())
   .then(data => {
     L.geoJSON(data, {
-        filter: function (feature) {
-        return feature.geometry.type !== 'Point';
-      },
       style: {
         color: 'red',
         weight: 5,
         opacity: 1
       },
-      pointToLayer: function (feature, latlng) {
-        return L.marker(latlng, { icon: jeepneyStopIcon }).bindPopup(feature.properties.name || 'Jeepney Stop');
-      }
+        pointToLayer: function (feature, latlng) {
+          const stopNum = feature.properties.stop_number;
+          const label = L.divIcon({
+            className: 'stop-label',
+            html: `<div style="color:white; background:red; width:18px; border-radius:50%; padding:1px; text-align:center; padding-top:3px; font-size:10px; border:1px solid black;">${stopNum}</div>`,
+            iconSize: [30, 20],
+            iconAnchor: [15, 10]
+          });
+
+          return L.marker(latlng, { icon: label }).bindPopup(`Stop ${stopNum}: ${feature.properties.name || 'Jeepney Stop'}`);
+        }
     }).addTo(map);
   });
 
@@ -63,16 +71,24 @@ fetch('/geojson_files/batangas_capitolio_hospital_route.geojson')
   .then(response => response.json())
   .then(data => {
     L.geoJSON(data, {
-        filter: function (feature) {
-        return feature.geometry.type !== 'Point';
-      },
+      //   filter: function (feature) {
+      //   return feature.geometry.type !== 'Point';
+      // },
       style: {
         color: 'green',
         weight: 3,
         opacity: 1
       },
       pointToLayer: function (feature, latlng) {
-        return L.marker(latlng, { icon: jeepneyStopIcon }).bindPopup(feature.properties.name || 'Jeepney Stop');
+        const stopNum = feature.properties.stop_number;
+        const label = L.divIcon({
+          className: 'stop-label',
+          html: `<div style="color:white; background:green; width:18px; border-radius:50%; padding:1px; text-align:center; padding-top:3px; font-size:10px; border:1px solid black;">${stopNum}</div>`,
+          iconSize: [30, 20],
+          iconAnchor: [15, 10]
+        });
+
+        return L.marker(latlng, { icon: label }).bindPopup(`Stop ${stopNum}: ${feature.properties.name || 'Jeepney Stop'}`);
       }
     }).addTo(map);
   });
