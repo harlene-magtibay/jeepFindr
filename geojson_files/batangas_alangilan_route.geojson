@@ -2,11 +2,12 @@
   "type": "FeatureCollection",
   "generator": "overpass-turbo",
   "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.",
-  "timestamp": "2025-05-09T19:05:04Z",
+  "timestamp": "2025-05-09T06:50:13Z",
   "features": [
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 1,
         "@id": "relation/5391188",
         "colour": "yellow",
         "from": "Alangilan",
@@ -2839,6 +2840,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 6,
         "@id": "node/774613055",
         "@relations": [
           {
@@ -2875,6 +2877,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 12,
         "@id": "node/3922053579",
         "@relations": [
           {
@@ -2911,6 +2914,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 10,
         "@id": "node/3922053580",
         "@relations": [
           {
@@ -2947,6 +2951,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 11,
         "@id": "node/3922053583",
         "@relations": [
           {
@@ -2983,6 +2988,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 1,
         "@id": "node/7076721614",
         "@relations": [
           {
@@ -3019,6 +3025,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 2,
         "@id": "node/4425941589",
         "@relations": [
           {
@@ -3055,6 +3062,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 3,
         "@id": "node/4425941392",
         "@relations": [
           {
@@ -3091,6 +3099,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 4,
         "@id": "node/4658775489",
         "@relations": [
           {
@@ -3127,6 +3136,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 5,
         "@id": "node/5310693921",
         "@relations": [
           {
@@ -3163,6 +3173,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 7,
         "@id": "node/4425941397",
         "@relations": [
           {
@@ -3199,6 +3210,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 8,
         "@id": "node/4425941690",
         "@relations": [
           {
@@ -3235,6 +3247,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 9,
         "@id": "node/6575970486",
         "@relations": [
           {
@@ -3271,6 +3284,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 13,
         "@id": "node/7410467755",
         "@relations": [
           {
@@ -3307,6 +3321,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 14,
         "@id": "node/5301974430",
         "@relations": [
           {
@@ -3343,6 +3358,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 15,
         "@id": "node/5313733722",
         "@relations": [
           {
@@ -3379,6 +3395,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 16,
         "@id": "node/7413314097",
         "@relations": [
           {
@@ -3415,6 +3432,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 17,
         "@id": "node/5301974330",
         "@relations": [
           {
@@ -3451,6 +3469,7 @@
     {
       "type": "Feature",
       "properties": {
+        "stop_number": 18,
         "@id": "node/7423900351",
         "@relations": [
           {
