@@ -9,16 +9,41 @@
 
 </head>
 <body>
-    <div class="input-container">
-        <h1 class="name-label">JeepFindr</h2>
+    <h1 class="name-label">JeepFindr</h2>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="showTab('seeRoutes')">See Routes</button>
+        <button class="tab-btn" onclick="showTab('findRoutes')">Find Routes</button>
+    </div>
+
+    <div id="seeRoutes" class="tab-content">
+        <label for="routeSelect">Choose a route:</label>
+        <select id="routeSelect" onchange="loadRoute(this.value)">
+            <option value="" disabled selected hidden>Select a Route</option>
+            <option value="balagtas">Batangas - Balagtas</option>
+            <option value="alangilan">Batangas - Alangilan</option>
+            <option value="capitolio">Batangas - Capitolio - Hospital</option>
+        </select>
+    </div>
+
+    <!-- <div id="findRoutes" class="tab-content" style="display:none;">
+        <p>Input your location and destination:</p>
+        <input type="text" id="currentLocation" placeholder="Current location (e.g., SM Batangas)">
+        <input type="text" id="destination" placeholder="Destination (e.g., Batangas Capitol)">
+        <button onclick="suggestRoute()">Find Jeepney Route</button>
+        <p id="routeSuggestion"></p>
+    </div> -->
+
+    <div id="findRoutes" class="input-container tab-content" style="display:none;">
         <div class="inputbox-container">
             <img src="/img/location_to_destination.png" alt="">
             <div class="inputbox">
-                <input type="text" id="start" placeholder="Your Location">
-                <input type="text" id="end" placeholder="Desination">
+                <input type="text" id="currentLocation" placeholder="Your Location">
+                <input type="text" id="destination" placeholder="Desination">
             </div>
         </div>
         <button class="findRouteButton" onclick="findRoute()">Find Jeepney Route</button>
+        <p id="routeSuggestion"></p>
     </div>
     
     <div id="map"></div>
