@@ -119,8 +119,8 @@ function findRoute() {
     const destinationPoint = L.latLng(destLat, destLng);
 
     const routes = [
-      { name: 'balagtas', file: '/geojson_files/batangas_balagtas_route.geojson', color: 'yellow' },
-      { name: 'alangilan', file: '/geojson_files/batangas_alangilan_route.geojson', color: 'yellow' },
+      { name: 'balagtas', file: '/geojson_files/batangas_balagtas_route.geojson', color: '#8E1616' },
+      { name: 'alangilan', file: '/geojson_files/batangas_alangilan_route.geojson', color: '#8E1616' },
       { name: 'capitolio', file: '/geojson_files/batangas_capitolio_hospital_route.geojson', color: '#8E1616' }
     ];
 
@@ -197,6 +197,35 @@ function findRoute() {
       map.setView(currentPoint, 14);
       currentMarker = L.marker(currentPoint, { icon: currentLocation }).addTo(map).bindPopup("Current Location").openPopup();
       destinationMarker = L.marker(destinationPoint, { icon: destination }).addTo(map).bindPopup("Destination").openPopup();
+
+      // Calculate fare estimate
+function calculateFare(distanceKm, passengerType) {
+  let baseFare = (passengerType === 'regular') ? 13 : 11;
+  if (distanceKm <= 4) return baseFare;
+  const extraKm = Math.ceil(distanceKm - 4); // round up to next km
+  return baseFare + (extraKm * 4);
+}
+
+const passengerType = document.getElementById("fareType").value;
+
+// Calculate haversine distance between current and destination
+function haversineDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371; // Radius of the Earth in km
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = 
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLon/2) * Math.sin(dLon/2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return R * c; // distance in km
+}
+
+const distanceKm = haversineDistance(currLat, currLng, destLat, destLng);
+const fare = calculateFare(distanceKm, passengerType);
+document.getElementById("fareEstimate").innerText = 
+  `Estimated Fare (${passengerType}): ₱${fare.toFixed(2)}`;
+
     });
   })
   .catch(err => {
@@ -204,6 +233,31 @@ function findRoute() {
     console.error(err);
   });
 }
+
+// Try to get user's current location and autofill the currentLocation input
+if ("geolocation" in navigator) {
+  navigator.geolocation.getCurrentPosition(
+    position => {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+
+      fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`, {
+        headers: {
+          'User-Agent': 'JeepFindr/1.0 (21-07362@g.batstate-u.edu.ph)'
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          const address = data.display_name;
+          document.getElementById("currentLocation").value = address;
+        })
+        .catch(err => console.error("Reverse geocoding failed:", err));
+    },
+    error => console.error("Geolocation error:", error),
+    { enableHighAccuracy: true }
+  );
+}
+
 
 
 

@@ -77,6 +77,18 @@ body {
     flex-direction: column;
 }
 
+.fareEstimate {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+#fareType {
+  padding: 5px;
+  border-radius: 8px;
+}
+
 #currentLocation, #destination {
     border-radius: 5px;
     width: 12em;
@@ -109,4 +121,66 @@ body {
     margin: 10px;
     border-radius: 10px;
     place-self: center;
+}
+
+
+@media (min-width: 600px) {
+  .tab-btn {
+    padding: 12px 28px;
+    font-size: 1.05rem;
+  }
+
+  #currentLocation, #destination,
+  .findRouteButton {
+    width: 16em;
+    /* font-size: 1rem; */
+  }
+
+  #map {
+    height: 60vh;
+    width: 70%;
+  }
+
+  .inputbox-container {
+    gap: 10px;
+  }
+
+  .fareEstimate {
+    gap: 12px;
+  }
+}
+
+
+@media (min-width: 1024px) {
+  .name-label {
+    font-size: 1.5rem;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .tab-btn {
+    padding: 10px 32px;
+    font-size: 1rem;
+  }
+
+  #currentLocation, #destination,
+  .findRouteButton {
+    width: 20em;
+    /* height: 2rem; */
+    font-size: 1rem;
+  }
+
+  .input-container {
+    padding: 10px;
+  }
+
+  .inputbox-container img {
+    width: 2rem;
+  }
+
+  #map {
+    height: 70vh;
+    width: 80%;
+    margin: 20px auto;
+  }
 }
