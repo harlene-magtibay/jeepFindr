@@ -34,7 +34,7 @@
                 <input type="text" id="destination" placeholder="Desination">
             </div>
         </div>
-        <div class="fareEstimate">
+        <div class="fareEstimateDropdown">
             <select id="fareType" style="display: block;">
                 <option value="" disabled selected hidden>Select Faretype</option>
                 <option value="regular">Regular</option>
@@ -43,10 +43,13 @@
             </select>
             <button class="findRouteButton" onclick="findRoute()">Find Jeepney Route</button>
         </div>
+        <div class="result" id="result">
+            <p id="routeSuggestion" style="font-weight:bold;">Suggested Jeepney Route:</p>
+            <p id="fareEstimate" style="font-weight:bold;">Estimated Fare:</p>
+        </div>
         
-        <p id="routeSuggestion"></p>
-        <p id="fareEstimate" style="font-weight:bold; margin-top:5px;"></p>
     </div>
+    
     
     <div id="map"></div>
 

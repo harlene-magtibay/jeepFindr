@@ -107,6 +107,137 @@ function findRoute() {
     return;
   }
 
+
+    // Check for manual multi-leg rule
+  const fromLower = currentInput.toLowerCase();
+  const toLower = destInput.toLowerCase();
+
+if (fromLower === 'sm city batangas' && toLower === 'bsu alangilan' || toLower === 'batangas state university alangilan') {
+  document.getElementById("routeSuggestion").innerText = 
+    `Suggested Jeepney Route: 
+    1.) Batangas - Capitolio (Red Routing) → Don Ramos
+    2.) Batangas - Alangilan (Green Routing) → BSU Alangilan`;
+
+  const fareType = document.getElementById("fareType").value.trim().toLowerCase();
+  if (fareType === 'regular') {
+    document.getElementById("fareEstimate").innerText = 
+      "Estimated Fare: Two rides (₱13.00 + ₱13.00 = ₱26.00).";
+  } else {
+    document.getElementById("fareEstimate").innerText = 
+      "Estimated Fare: Two rides (₱11.00 + ₱11.00 = ₱22.00).";
+  }
+
+  if (routeLayer) {
+    map.removeLayer(routeLayer);
+    routeLayer = null;
+  }
+
+  // Load both routes and display on the map
+  Promise.all([
+    fetch('/geojson_files/batangas_capitolio_hospital_route.geojson').then(res => res.json()),
+    fetch('/geojson_files/batangas_alangilan_route.geojson').then(res => res.json())
+  ])
+  .then(([capitolioData, alangilanData]) => {
+    const combinedLayer = L.layerGroup();
+
+    const layer1 = L.geoJSON(capitolioData, {
+      style: { color: 'red', weight: 4, opacity: 1 },
+      pointToLayer: function (feature, latlng) {
+        const stopNum = feature.properties.stop_number;
+
+        // 🔁 Add special transfer icon only at Stop 4
+        if (stopNum === 4) {
+          const transferIcon = L.icon({
+            iconUrl: '/img/transfer_icon.png', // 🖼️ replace with your actual icon path
+            iconSize: [35, 35],
+            iconAnchor: [17, 35],
+            popupAnchor: [0, -30]
+          });
+          return L.marker(latlng, { icon: transferIcon }).bindPopup("Transfer Here: Stop 4 - Don Ramos");
+        }
+
+        // 🟡 Default marker for other stops
+        const label = L.divIcon({
+          className: 'stop-label',
+          html: `<div style="color:black; background:white; width:13px; border-radius:50%; padding:1px; text-align:center; padding-top:2px; font-size:8px; border:1px solid black;">${stopNum}</div>`,
+          iconSize: [30, 20],
+          iconAnchor: [15, 10]
+        });
+        return L.marker(latlng, { icon: label }).bindPopup(`Stop ${stopNum}: ${feature.properties.name || 'Jeepney Stop'}`);
+      }
+    });
+
+    const layer2 = L.geoJSON(alangilanData, {
+      style: { color: 'green', weight: 4, opacity: 1 },
+      pointToLayer: function (feature, latlng) {
+        const stopNum = feature.properties.stop_number;
+        const label = L.divIcon({
+          className: 'stop-label',
+          html: `<div style="color:black; background:yellow; width:13px; border-radius:50%; padding:1px; text-align:center; padding-top:2px; font-size:8px; border:1px solid black;">${stopNum}</div>`,
+          iconSize: [30, 20],
+          iconAnchor: [15, 10]
+        });
+        return L.marker(latlng, { icon: label }).bindPopup(`Stop ${stopNum}: ${feature.properties.name || 'Jeepney Stop'}`);
+      }
+    });
+
+    combinedLayer.addLayer(layer1);
+    combinedLayer.addLayer(layer2);
+    combinedLayer.addTo(map);
+
+    // Geocode and plot current and destination markers
+    Promise.all([
+      geocodeLocation(currentInput),
+      geocodeLocation(destInput)
+    ])
+    .then(([currCoords, destCoords]) => {
+      const [currLat, currLng] = currCoords;
+      const [destLat, destLng] = destCoords;
+
+      const currentPoint = L.latLng(currLat, currLng);
+      const destinationPoint = L.latLng(destLat, destLng);
+
+      const currentLocationIcon = L.icon({
+        iconUrl: '/img/user_current_location.png',
+        iconSize: [40, 40],
+        iconAnchor: [20, 40],
+        popupAnchor: [1, -34]
+      });
+
+      const destinationIcon = L.icon({
+        iconUrl: '/img/destination.png',
+        iconSize: [40, 40],
+        iconAnchor: [20, 40],
+        popupAnchor: [1, -34]
+      });
+
+      if (currentMarker) {
+        map.removeLayer(currentMarker);
+        currentMarker = null;
+      }
+      if (destinationMarker) {
+        map.removeLayer(destinationMarker);
+        destinationMarker = null;
+      }
+
+      currentMarker = L.marker(currentPoint, { icon: currentLocationIcon }).addTo(map).bindPopup("Current Location").openPopup();
+      destinationMarker = L.marker(destinationPoint, { icon: destinationIcon }).addTo(map).bindPopup("Destination").openPopup();
+    });
+
+    routeLayer = combinedLayer;
+
+    map.setView([13.768, 121.061], 14);
+  })
+  .catch(err => {
+    console.error("Failed to load multi-leg route data:", err);
+    alert("Error displaying the multi-leg route.");
+  });
+
+  return; // Skip automatic route matching logic
+}
+
+
+
   Promise.all([
     geocodeLocation(currentInput),
     geocodeLocation(destInput)
@@ -199,32 +330,32 @@ function findRoute() {
       destinationMarker = L.marker(destinationPoint, { icon: destination }).addTo(map).bindPopup("Destination").openPopup();
 
       // Calculate fare estimate
-function calculateFare(distanceKm, passengerType) {
-  let baseFare = (passengerType === 'regular') ? 13 : 11;
-  if (distanceKm <= 4) return baseFare;
-  const extraKm = Math.ceil(distanceKm - 4); // round up to next km
-  return baseFare + (extraKm * 4);
-}
+      function calculateFare(distanceKm, passengerType) {
+        let baseFare = (passengerType === 'regular') ? 13 : 11;
+        if (distanceKm <= 4) return baseFare;
+        const extraKm = Math.ceil(distanceKm - 4); // round up to next km
+        return baseFare + (extraKm * 4);
+      }
 
-const passengerType = document.getElementById("fareType").value;
+      const passengerType = document.getElementById("fareType").value;
 
-// Calculate haversine distance between current and destination
-function haversineDistance(lat1, lon1, lat2, lon2) {
-  const R = 6371; // Radius of the Earth in km
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLon = (lon2 - lon1) * Math.PI / 180;
-  const a = 
-    Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-    Math.sin(dLon/2) * Math.sin(dLon/2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-  return R * c; // distance in km
-}
+      // Calculate haversine distance between current and destination
+      function haversineDistance(lat1, lon1, lat2, lon2) {
+        const R = 6371; // Radius of the Earth in km
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const a = 
+          Math.sin(dLat/2) * Math.sin(dLat/2) +
+          Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+          Math.sin(dLon/2) * Math.sin(dLon/2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        return R * c; // distance in km
+      }
 
-const distanceKm = haversineDistance(currLat, currLng, destLat, destLng);
-const fare = calculateFare(distanceKm, passengerType);
-document.getElementById("fareEstimate").innerText = 
-  `Estimated Fare (${passengerType}): ₱${fare.toFixed(2)}`;
+      const distanceKm = haversineDistance(currLat, currLng, destLat, destLng);
+      const fare = calculateFare(distanceKm, passengerType);
+      document.getElementById("fareEstimate").innerText = 
+        `Estimated Fare: ₱${fare.toFixed(2)}`;
 
     });
   })
@@ -257,85 +388,4 @@ if ("geolocation" in navigator) {
     { enableHighAccuracy: true }
   );
 }
-
-
-
-
-// // Load and display the GeoJSON route
-// fetch(file)
-//   .then(response => response.json())
-//   .then(data => {
-//     routeLayer = L.geoJSON(data, {
-//     // filter: function (feature) {
-//     //     return feature.geometry.type !== 'Point';
-//     //   },
-//   style: {
-//     color: color,
-//     weight: 8,
-//     opacity: 1
-//   },
-//   pointToLayer: function (feature, latlng) {
-//     const stopNum = feature.properties.stop_number;
-//     const label = L.divIcon({
-//       className: 'stop-label',
-//       html: `<div style="color:white; background:blue; width:18px; border-radius:50%; padding:1px; text-align:center; padding-top:3px; font-size:10px; border:1px solid black;">${stopNum}</div>`,
-//       iconSize: [30, 20],
-//       iconAnchor: [15, 10]
-//     });
-
-//     return L.marker(latlng, { icon: label }).bindPopup(`Stop ${stopNum}: ${feature.properties.name || 'Jeepney Stop'}`);
-//   }
-// }).addTo(map);
-//   });
-
-
-// fetch('/geojson_files/batangas_balagtas_route.geojson')
-//   .then(response => response.json())
-//   .then(data => {
-//     L.geoJSON(data, {
-//       style: {
-//         color: 'red',
-//         weight: 5,
-//         opacity: 1
-//       },
-//         pointToLayer: function (feature, latlng) {
-//           const stopNum = feature.properties.stop_number;
-//           const label = L.divIcon({
-//             className: 'stop-label',
-//             html: `<div style="color:white; background:red; width:18px; border-radius:50%; padding:1px; text-align:center; padding-top:3px; font-size:10px; border:1px solid black;">${stopNum}</div>`,
-//             iconSize: [30, 20],
-//             iconAnchor: [15, 10]
-//           });
-
-//           return L.marker(latlng, { icon: label }).bindPopup(`Stop ${stopNum}: ${feature.properties.name || 'Jeepney Stop'}`);
-//         }
-//     }).addTo(map);
-//   });
-
-
-// fetch('/geojson_files/batangas_capitolio_hospital_route.geojson')
-//   .then(response => response.json())
-//   .then(data => {
-//     L.geoJSON(data, {
-//       //   filter: function (feature) {
-//       //   return feature.geometry.type !== 'Point';
-//       // },
-//       style: {
-//         color: 'green',
-//         weight: 3,
-//         opacity: 1
-//       },
-//       pointToLayer: function (feature, latlng) {
-//         const stopNum = feature.properties.stop_number;
-//         const label = L.divIcon({
-//           className: 'stop-label',
-//           html: `<div style="color:white; background:green; width:18px; border-radius:50%; padding:1px; text-align:center; padding-top:3px; font-size:10px; border:1px solid black;">${stopNum}</div>`,
-//           iconSize: [30, 20],
-//           iconAnchor: [15, 10]
-//         });
-
-//         return L.marker(latlng, { icon: label }).bindPopup(`Stop ${stopNum}: ${feature.properties.name || 'Jeepney Stop'}`);
-//       }
-//     }).addTo(map);
-//   });
 
