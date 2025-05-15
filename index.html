@@ -9,7 +9,7 @@
 
 </head>
 <body>
-    <h1 class="name-label">JeepFindr</h2>
+    <h2 class="name-label">JeepFindr</h2>
 
     <div class="tabs">
         <button class="tab-btn active" onclick="showTab('seeRoutes')">See Routes</button>
@@ -26,14 +26,6 @@
         </select>
     </div>
 
-    <!-- <div id="findRoutes" class="tab-content" style="display:none;">
-        <p>Input your location and destination:</p>
-        <input type="text" id="currentLocation" placeholder="Current location (e.g., SM Batangas)">
-        <input type="text" id="destination" placeholder="Destination (e.g., Batangas Capitol)">
-        <button onclick="suggestRoute()">Find Jeepney Route</button>
-        <p id="routeSuggestion"></p>
-    </div> -->
-
     <div id="findRoutes" class="input-container tab-content" style="display:none;">
         <div class="inputbox-container">
             <img src="/img/location_to_destination.png" alt="">
@@ -42,8 +34,18 @@
                 <input type="text" id="destination" placeholder="Desination">
             </div>
         </div>
-        <button class="findRouteButton" onclick="findRoute()">Find Jeepney Route</button>
+        <div class="fareEstimate">
+            <select id="fareType" style="display: block;">
+                <option value="" disabled selected hidden>Select Faretype</option>
+                <option value="regular">Regular</option>
+                <option value="student">Student</option>
+                <option value="senior">Senior Citizen</option>
+            </select>
+            <button class="findRouteButton" onclick="findRoute()">Find Jeepney Route</button>
+        </div>
+        
         <p id="routeSuggestion"></p>
+        <p id="fareEstimate" style="font-weight:bold; margin-top:5px;"></p>
     </div>
     
     <div id="map"></div>
